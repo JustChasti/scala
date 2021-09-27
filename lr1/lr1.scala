@@ -16,6 +16,7 @@ def Task4(){
 def Task5(){
     println(probablePrime(100, Random)) // 3 и 4 строчки
 }
+// 1-е число - длинна в битах
 
 
 def Task6(){
@@ -35,6 +36,7 @@ def Task8(){
     val text = "text123"
     println(text.take(3)) // A string containing the first n chars of this string.
     println(text.drop(3)) // The rest of the string without its n first chars.
+    // то есть взять или дропнуть первые n символов строки
     // Right то же но с конца
 }
 
@@ -47,12 +49,14 @@ def Task9(x: Double): Int = {
         signum = -1
     signum
 }
+// var - потому что изменяемое
 
 
 def Task10(){
     val x = {}
     println(x.getClass)
 }
+// getClass - тип переменной
 
 
 def Task11(){
@@ -83,14 +87,19 @@ def Task13(){
 
 
 def Task14(){
-    println(T14C("Hello")) 
+    println(product("Hello")) 
 }
 
 
-def T14C(s2: String): Long = { 
+def product(s2: String): Long = { 
     s2.foldLeft(1L)((m, n) => m * n) 
 }
-
+// foldleft - (начальное значение)(действия) таким образом прогоняется вся коллекция слева направо
+/* пример 
+val list = List(1, 2, 3 ,4)
+val result = list.foldLeft(0)(_ + _)
+результат - 10
+*/
 
 def Task16(){
     println(Compose("Hello"))
@@ -152,11 +161,11 @@ def Opener(l: List[Any]): Unit = {
 }*/
 
 
-def valid(toString: String): Boolean = {
+def valid(s: String): Boolean = {
     var a = ListBuffer[Int]()
-    for (w <- 0 until toString.length) {
-      if (!a.contains(toString(w))) {
-        a += toString(w)
+    for (w <- 0 until s.length) {
+      if (!a.contains(s(w))) {
+        a += s(w)
       }
       else {
         return false
@@ -164,21 +173,21 @@ def valid(toString: String): Boolean = {
     }
     true
 }
-
+// тут проверяем до длинны s содержится ли у нас уже такой элемент
 
 
 def Task18(m: Int, n: Int){
     var a: Int = 0
     for (w <- m to n; if (valid(w.toString))) {
-        a += w;
+        a += w
     }
     println(a)
 }
+// обычный цикл и проверка кадого числа
 
 
 def Task19(m: List[Any]){
-    var s = 1::Nil
-    s = s.filter(_<2)
+    var s = List[Any]()
     val s2 = m.toString();
     for(v<-0 until s2.length){
       if(s2(v).toInt>47&&s2(v).toInt<58){
@@ -187,14 +196,15 @@ def Task19(m: List[Any]){
     }
     println(s.reverse)
 }
+// переводим в строку и если код числа от 47 до 58
 
 
 
 def Task20(n: Int){
     var a:Int = 1
     for (i <- 2 until n) {
-      if (n % i == 0) {
-        a=i;
+      if ((n % i == 0) && (simple(i))) {
+        a=i
       }
     }
     var c = 0
@@ -203,6 +213,22 @@ def Task20(n: Int){
     }
     println(c)
 }
+// 1) смотрит делители по условию 2) складывает циферки
+
+
+def simple(n: Int): Boolean = {
+  var a:Int = 1
+  for (i <- 1 until n) {
+      if (n % i == 0) {
+        a=i;
+      }
+  }
+  if (a == 1)
+    return true
+  else
+  return false
+}
+// определяет простоту делителя
 
 
 def Task21(k:Int, m: List[Any]){
@@ -214,32 +240,13 @@ def Task21(k:Int, m: List[Any]){
     }
     println(c)
 }
+// берем нужный элемент и заносим в список k раз
 
 
-def Task22(n: Int){
-    var a:Int = 1
-    for (i <- 2 until n) {
-      if (n % i == 0) {
-        a=i;
-      }
-    }
-    var c = 0
-    for (w <- 0 until a.toString.length) {
-      c+=a.toString.charAt(w).toString.toInt
-    }
-    println(c)
-}
+// 22 - смотри 20
 
 
-def Task23(k:Int, m: List[Any]){
-    var c = List[Any]()
-    for(i<- 0 until m.length){
-      for(j<- 0 until k){
-        c = m(i)::c
-      }
-    }
-    println(c)
-}
+// 23 - смотри 21
 
 
 def gcd(a: Int, b: Int): Int = {
@@ -247,9 +254,10 @@ def gcd(a: Int, b: Int): Int = {
       a
     }
     else {
-      gcd(b,a % b);
+      gcd(b,a % b)
     }
 }
+// рекурсивный алгоритм вычисляющий общий делитель чисел
 
 
 def Task24(n: Int, m: Int){
@@ -266,7 +274,7 @@ def Task25(k:Int, m: List[Any]){
     }
     println(c.reverse)
 }
-
+// тут просто не сохраняются лишние числа
 
 def faktorial(n:Int):Int={
     if(n<2){
@@ -281,6 +289,7 @@ def faktorial(n:Int):Int={
 def Task26(n: Int, k: Int){
     println(faktorial(n)/faktorial(n-k))
 }
+// создана ф-я факториал и с помощью нее по формуле вычисляется число размещений
 
 
 def Task27(k:Int, m: List[Any]) : List[Any]={
@@ -309,6 +318,8 @@ def Task27(k:Int, m: List[Any]) : List[Any]={
     }
     c
 }
+// если i > 0 то берем список с 1 до конца и в конец ставим 0 и в рекурсию
+// если i < 0 то с 0 до препоследнего и последний в начало потом в рекурсию
 
 
 def summdel(n: Int): Int = {
@@ -328,6 +339,7 @@ def Task28(n: Int): Int ={
     }
     0
 }
+// гоняем числа от n до 1 через условие суммы делителей
 
 
 def Task29(m: List[Any]){
@@ -344,6 +356,7 @@ def Task29(m: List[Any]){
     println(c1.reverse)
     println(c2.reverse)
 }
+// приписываем к элементу список при условии четности и нечетности разный. Потом переворачиваем потому что приписывали список к элементу
 
 
 def Task30(n: Int): Int = {
@@ -355,18 +368,23 @@ def Task30(n: Int): Int = {
         sum+=a%10
         a/=10
       }
+      var b = sum
       if(sum>1){
-        val b = sum
-        while (sum<i){
-          sum*= b
+        while (b<i){
+          b*= sum
           count+=1
         }
       }
-      if(sum == i && count !=1 )return sum
+      if(b == i && count !=1 ){
+        print(sum, '^', count)
+        return count
+      }
       sum=0
     }
     0
 }
+// 512 - 8^3
+// сначала сумма цифр ищется, потом пока пока сумма меньше самого числа оно возводится в степень
 
 
 def Task31(m: List[(Int, String)]){
@@ -379,4 +397,5 @@ def Task31(m: List[(Int, String)]){
     println(c1.reverse)
     println(c2.reverse)
 }
-
+Task31(List((1, "a"), (2, "bb"), (3, "ccc")))
+// берем кортежи из списка и первый элемент в 1 список, второй - во 2
